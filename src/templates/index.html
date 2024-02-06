@@ -50,6 +50,18 @@
         },
         methods: {
           async init() {
+            await axios.get('/api/todolist')
+              .then((resp) => {
+                this.todolist = resp.data.map(todo => ({
+                  ...todo,
+                  selected: false
+                }))
+              })
+              .catch((error) => {
+                alert(error)
+              })
+            this.showCreateTodoForm = false
+            this.newTodo = ''
           },
           switchCreateTodoForm() {
             this.showCreateTodoForm = !this.showCreateTodoForm
