@@ -31,7 +31,7 @@
         <li v-for="todo in todolist" :key="todo.id">
           <input type="checkbox" :id="'todo-id-' + todo.id" v-model="todo.selected" />
           <label :for="'todo-id-' + todo.id">[[ todo.name ]]</label>
-          <span v-if="todo.completed"> | Done 👍</span>
+          <span v-if="todo.completed">- Done 👍</span>
         </li>
       </ul>
     </div>
