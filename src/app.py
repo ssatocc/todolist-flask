@@ -1,8 +1,10 @@
 import os
 from datetime import datetime
 
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+
+from validators import TodoValidator
 
 db = SQLAlchemy()
 
@@ -41,6 +43,17 @@ def create_app(config=None):
                 for todo in Todo.query.all()
             ]
         )
+
+    @app.route("/api/todolist", methods=["POST"])
+    def api_todolist_post():
+        try:
+            request_dict = request.get_json()
+            todo_validator = TodoValidator(name=request_dict["name"])
+            db.session.add(Todo(name=todo_validator.name))
+            db.session.commit()
+            return {"status": "success"}
+        except Exception as ex:
+            return {"status": "error", "message": str(ex)}
 
     return app
 
