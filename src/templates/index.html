@@ -67,6 +67,7 @@
             this.showCreateTodoForm = !this.showCreateTodoForm
           },
           selectAll() {
+            this.todolist.forEach(todo => { todo.selected = true })
           },
           async doneTodo() {
           },
