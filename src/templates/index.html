@@ -12,18 +12,29 @@
     <div id="app">
       <nav>
         <ul class="menu">
-          <li><a href="#">Create</a></li>
+          <li><a href="#" @click.prevent="switchCreateTodoForm">Create</a></li>
           <li><a href="#">Select all</a></li>
           <li><a href="#">Done</a></li>
           <li><a href="#">Delete</a></li>
         </ul>
       </nav>
+      <div class="createtodoform" v-show="showCreateTodoForm">
+        <form>
+          <label for="newTodo">
+            <small>New Todo:</small>
+          </label><br>
+          <input type="text" id="newTodo" autocomplete="off" v-model="newTodo" />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
     <script>
       const app = Vue.createApp({
         delimiters: ['[[', ']]'],
         data() {
           return {
+            showCreateTodoForm: false,
+            newTodo: ''
           }
         },
         async created() {
@@ -31,6 +42,9 @@
         },
         methods: {
           async init() {
+          },
+          switchCreateTodoForm() {
+            this.showCreateTodoForm = !this.showCreateTodoForm
           }
         }
       })
