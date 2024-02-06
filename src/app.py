@@ -55,6 +55,28 @@ def create_app(config=None):
         except Exception as ex:
             return jsonify({"status": "error", "message": str(ex)})
 
+    @app.route("/api/todolist/done", methods=["POST"])
+    def api_todolist_done_post():
+        try:
+            request_dict = request.get_json()
+            for todo in Todo.query.filter(Todo.id.in_(request_dict["ids"])).all():
+                todo.completed = True
+            db.session.commit()
+            return jsonify({"status": "success"})
+        except Exception as ex:
+            return jsonify({"status": "error", "message": str(ex)})
+
+    @app.route("/api/todolist", methods=["DELETE"])
+    def api_todolist_delete():
+        try:
+            request_dict = request.get_json()
+            for todo in Todo.query.filter(Todo.id.in_(request_dict["ids"])).all():
+                db.session.delete(todo)
+            db.session.commit()
+            return jsonify({"status": "success"})
+        except Exception as ex:
+            return jsonify({"status": "error", "message": str(ex)})
+
     return app
 
 
