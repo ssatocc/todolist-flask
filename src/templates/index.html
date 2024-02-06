@@ -13,9 +13,9 @@
       <nav>
         <ul class="menu">
           <li><a href="#" @click.prevent="switchCreateTodoForm">Create</a></li>
-          <li><a href="#">Select all</a></li>
-          <li><a href="#">Done</a></li>
-          <li><a href="#">Delete</a></li>
+          <li><a href="#" @click.prevent="selectAll">Select all</a></li>
+          <li><a href="#" @click.prevent="doneTodo">Done</a></li>
+          <li><a href="#" @click.prevent="deleteTodo">Delete</a></li>
         </ul>
       </nav>
       <div class="createtodoform" v-show="showCreateTodoForm">
@@ -65,6 +65,12 @@
           },
           switchCreateTodoForm() {
             this.showCreateTodoForm = !this.showCreateTodoForm
+          },
+          selectAll() {
+          },
+          async doneTodo() {
+          },
+          async deleteTodo() {
           },
           async createTodo() {
             await axios.post('/api/todolist', { name: this.newTodo })
