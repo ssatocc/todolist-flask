@@ -27,6 +27,13 @@
           <button type="submit">Submit</button>
         </form>
       </div>
+      <ul class="todolist">
+        <li v-for="todo in todolist" :key="todo.id">
+          <input type="checkbox" :id="'todo-id-' + todo.id" v-model="todo.selected" />
+          <label :for="'todo-id-' + todo.id">[[ todo.name ]]</label>
+          <span v-if="todo.completed"> | Done 👍</span>
+        </li>
+      </ul>
     </div>
     <script>
       const app = Vue.createApp({
@@ -34,7 +41,8 @@
         data() {
           return {
             showCreateTodoForm: false,
-            newTodo: ''
+            newTodo: '',
+            todolist: []
           }
         },
         async created() {
