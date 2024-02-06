@@ -3,6 +3,14 @@ Todolist app with Flask
 
 ## Setup
 
+```bash
+cd src/
+```
+
+```bash
+bash migrate.sh
+```
+
 ## Run Web server
 
 ```bash
