@@ -1,6 +1,7 @@
 import os
+from datetime import datetime
 
-from flask import Flask, render_template
+from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -19,11 +20,27 @@ def create_app(config=None):
 
     db.init_app(app)
 
-    from models import Todo  # noqa
+    class Todo(db.Model):
+        __tablename__ = "todos"
+
+        id = db.Column(db.Integer, primary_key=True)
+        name = db.Column(db.String(50), nullable=False)
+        completed = db.Column(db.Boolean, default=False)
+        created_at = db.Column(db.DateTime, default=datetime.utcnow)
+        updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     @app.route("/", methods=["GET"])
     def index():
         return render_template("index.html")
+
+    @app.route("/api/todolist", methods=["GET"])
+    def api_todolist_get():
+        return jsonify(
+            [
+                {"id": todo.id, "name": todo.name, "completed": todo.completed}
+                for todo in Todo.query.all()
+            ]
+        )
 
     return app
 
