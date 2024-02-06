@@ -51,9 +51,9 @@ def create_app(config=None):
             todo_validator = TodoValidator(name=request_dict["name"])
             db.session.add(Todo(name=todo_validator.name))
             db.session.commit()
-            return {"status": "success"}
+            return jsonify({"status": "success"})
         except Exception as ex:
-            return {"status": "error", "message": str(ex)}
+            return jsonify({"status": "error", "message": str(ex)})
 
     return app
 
