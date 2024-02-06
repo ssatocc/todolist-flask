@@ -10,9 +10,31 @@
   </head>
   <body>
     <div id="app">
-      index
+      <nav>
+        <ul class="menu">
+          <li><a href="#">Create</a></li>
+          <li><a href="#">Select all</a></li>
+          <li><a href="#">Done</a></li>
+          <li><a href="#">Delete</a></li>
+        </ul>
+      </nav>
     </div>
     <script>
+      const app = Vue.createApp({
+        delimiters: ['[[', ']]'],
+        data() {
+          return {
+          }
+        },
+        async created() {
+          await this.init()
+        },
+        methods: {
+          async init() {
+          }
+        }
+      })
+      app.mount('#app')
     </script>
   </body>
 </html>
