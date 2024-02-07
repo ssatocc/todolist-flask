@@ -14,7 +14,7 @@ bash migrate.sh
 ## Run Web server
 
 ```bash
-python run.py
+python app.py
 ```
 
 Open http://localhost:3000/ or https://localhost:3443/
