@@ -35,6 +35,12 @@ def create_app(config=None):
     def index():
         return render_template("index.html")
 
+    def status_success():
+        return {"status": "success"}
+
+    def status_error(ex):
+        return {"status": "error", "message": str(ex)}
+
     @app.route("/api/todolist", methods=["GET"])
     def api_todolist_get():
         return jsonify(
@@ -51,9 +57,9 @@ def create_app(config=None):
             todo_validator = TodoValidator(name=request_dict["name"])
             db.session.add(Todo(name=todo_validator.name))
             db.session.commit()
-            return jsonify({"status": "success"})
+            return jsonify(status_success())
         except Exception as ex:
-            return jsonify({"status": "error", "message": str(ex)})
+            return jsonify(status_error(ex))
 
     @app.route("/api/todolist/done", methods=["POST"])
     def api_todolist_done_post():
@@ -62,9 +68,9 @@ def create_app(config=None):
             for todo in Todo.query.filter(Todo.id.in_(request_dict["ids"])).all():
                 todo.completed = True
             db.session.commit()
-            return jsonify({"status": "success"})
+            return jsonify(status_success())
         except Exception as ex:
-            return jsonify({"status": "error", "message": str(ex)})
+            return jsonify(status_error(ex))
 
     @app.route("/api/todolist", methods=["DELETE"])
     def api_todolist_delete():
@@ -73,9 +79,9 @@ def create_app(config=None):
             for todo in Todo.query.filter(Todo.id.in_(request_dict["ids"])).all():
                 db.session.delete(todo)
             db.session.commit()
-            return jsonify({"status": "success"})
+            return jsonify(status_success())
         except Exception as ex:
-            return jsonify({"status": "error", "message": str(ex)})
+            return jsonify(status_error(ex))
 
     return app
 
