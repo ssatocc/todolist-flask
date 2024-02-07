@@ -44,3 +44,11 @@
 .todolist li span {
     margin-left: 10px;
 }
+
+.example {
+    padding-inline-start: 20px;
+}
+
+.example h4 {
+    margin-bottom: 0px;
+}
